@@ -1,4 +1,5 @@
 const resultPanel = document.getElementById('result-panel');
+let isResult = false;
 
 document.getElementById('calculator-section').addEventListener('click', (e) => {
     e.stopPropagation();
@@ -26,11 +27,13 @@ const getLastChar = (str) => {
 
 const reset = () => {
     resultPanel.innerHTML = '0';
+    isResult=false;
 }
 
 const equals = () => {
     const result = eval(resultPanel.innerHTML);
     resultPanel.innerHTML = result;
+    isResult = true;
 }
 
 const append = (ch) => {
@@ -46,8 +49,13 @@ const append = (ch) => {
             resultPanel.innerHTML = resStr.concat(ch);
         }
     }
+    isResult=false;
 }
 
 const back = () => {
-
+    if(!isResult) {
+        const resStr = resultPanel.innerHTML;
+        resultPanel.innerHTML = resStr.substring(0, resStr.length - 1);
+        if(resultPanel.innerHTML.length === 0) resultPanel.innerHTML = 0;
+    }
 }
